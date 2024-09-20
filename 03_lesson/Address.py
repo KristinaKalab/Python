@@ -1,18 +1,10 @@
-def month_to_season(month):
-    if 3 <= month <= 5:
-        return "Весна"
-    elif 6 <= month <= 8:
-        return "Лето"
-    elif 9 <= month <= 11:
-        return "Осень"
-    elif month == 12 or month == 1 or month == 2:
-        return "Зима"
-    else:
-        return "Неверный номер месяца"
+class Address:
+    def __init__(self, index, city, street, house, apartment):
+        self.index = index
+        self.city = city
+        self.street = street
+        self.house = house
+        self.apartment = apartment
 
-
-try:
-    month = int(input("Введите номер месяца (1-12): "))
-    print(month_to_season(month))
-except ValueError:
-    print("Пожалуйста, введите целое число от 1 до 12.")
+    def __str__(self):
+        return f"{self.index}, {self.city}, {self.street}, {self.house} - {self.apartment}"

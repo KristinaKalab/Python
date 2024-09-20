@@ -1,13 +1,8 @@
-import math
+class Smartphone:
+    def __init__(self, marka, model, phone_number):
+        self.marka = marka
+        self.model = model
+        self.phone_number = phone_number
 
-
-def square(side):
-    area = side ** 2
-    return math.ceil(area)
-
-
-side_length = float(input("Введите сторону квадрата: "))
-
-area_result = square(side_length)
-
-print(f"Площадь квадрата: {area_result}")
+    def __str__(self):
+        return f"{self.marka} - {self.model}. {self.phone_number}"

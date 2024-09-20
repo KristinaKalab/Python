@@ -1,3 +1,9 @@
-my_list = list(range(18, 0, -4))
+from address import Address
+from mailing import Mailing
 
-print(my_list)
+to_address = Address("123456", "Москва", "Ленина", "15", "12")
+from_address = Address("654321", "Санкт-Петербург", "Невский пр.", "7", "5")
+
+mailing = Mailing(to_address, from_address, 300, "TRK123456")
+
+print(mailing)
