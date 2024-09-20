@@ -1,8 +1,6 @@
-from product import Product  # Импортируем класс Product из файла product.py
-
+from product import Product
 my_product = Product("Яблоко", 50)
 
-# Вызываем методы и выводим результаты
-print(my_product.get_name())  # Вывод названия продукта
-print(my_product.get_price())  # Вывод цены продукта
-print(my_product.get_description())  # Вывод описания продукта
+print(my_product.get_name())
+print(my_product.get_price())
+print(my_product.get_description())

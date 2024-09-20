@@ -1,13 +1,13 @@
 class Product:
     def __init__(self, name, price):
-        self.name = name  # Название продукта
-        self.price = price  # Цена продукта
+        self.name = name
+        self.price = price
 
     def get_name(self):
-        return self.name  # Возвращает название продукта
+        return self.name
 
     def get_price(self):
-        return self.price  # Возвращает цену продукта
+        return self.price
 
     def get_description(self):
         return f"Название: {self.name}, Цена: {self.price}"
