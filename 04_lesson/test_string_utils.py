@@ -20,6 +20,7 @@ def test_capitilize(string_utils, text_in, text_out):
                          [("   kristina", "kristina"),
                           ("kristina   ", "kristina   "),
                           ("kristina kristina  ", "kristina kristina  "),
+                          ("  kristina kristina  ", "kristina kristina  "),
                           ("   ", "")])
 def test_trim(string_utils, text_in, text_out):
     assert string_utils.trim(text_in) == text_out
@@ -93,9 +94,9 @@ def test_list_to_string(string_utils, list_in, joiner, expected_output):
     (""),
     (None)
 ])
-def test_capitalize_negative(string_utils, text_in):
+def test_capitilize_negative(string_utils, text_in):
     with pytest.raises(AttributeError):
-        string_utils.capitalize(text_in)
+        string_utils.capitilize(text_in)
 
 
 @pytest.mark.parametrize("text_in", [
