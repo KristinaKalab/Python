@@ -8,7 +8,7 @@ def string_utils():
 
 
 @pytest.mark.parametrize("text_in, text_out",
-                         [("kristina", "Kristina"),
+                         [("oleg", "Oleg"),
                           ("k", "K"),
                           ("kristina Vladimirovna Kalaburdina",
                            "Kristina Vladimirovna Kalaburdina")])
