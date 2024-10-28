@@ -1,20 +1,21 @@
 import pytest
 from selenium import webdriver
-from main_page_01 import MainPage
-from confirmation_page_01 import ConfirmationPage
+from formpage import FormPage
 
 
 @pytest.fixture(scope="function")
 def driver():
     driver = webdriver.Chrome()
     driver.maximize_window()
-    driver.get
-    ("https://bonigarcia.dev/selenium-webdriver-java/data-types.html")
     yield driver
     driver.quit()
 
 
 def test_fill_form(driver):
+    driver.get("https://bonigarcia.dev/selenium-webdriver-java/data-types.html"
+               )
+    form_page = FormPage(driver)
+
     fields = {
         "first-name": "Иван",
         "last-name": "Петров",
@@ -28,26 +29,29 @@ def test_fill_form(driver):
         "company": "SkyPro",
     }
 
-    main_page = MainPage(driver)
-    main_page.fill_form(fields)
-    main_page.click_submit()
+    # Заполнение формы
+    for field_name, value in fields.items():
+        form_page.fill_field(field_name, value)
 
-    confirmation_page = ConfirmationPage(driver)
+    # Нажатие на кнопку Submit
+    form_page.submit_form()
 
-    zip_code_color = confirmation_page.get_zip_code_color()
+    # Проверка цвета фона поля "Zip code" после отправки формы
+    zip_code_color = form_page.get_field_background_color("zip-code")
     expected_zip_code_color = 'rgba(248, 215, 218, 1)'
     assert zip_code_color == expected_zip_code_color, (
-        f"Expected Zip code background color: {expected_zip_code_color}, "
-        f"but got: {zip_code_color}"
+        "Expected Zip code background color: {expected_zip_code_color},"
+        "but got: {zip_code_color}"
     )
 
+    # Проверка цвета остальных полей
     green_fields = ["first-name", "last-name", "address", "city", "e-mail",
                     "phone", "job-position", "company"]
     expected_green_color = 'rgba(209, 231, 221, 1)'
 
-    for field_id in green_fields:
-        field_color = confirmation_page.get_background_color(field_id)
+    for field_name in green_fields:
+        field_color = form_page.get_field_background_color(field_name)
         assert field_color == expected_green_color, (
-            "Expected background color for {field_id}: "
-            "{expected_green_color}, but got: {field_color}"
+            "Expected background color for {field_name}:"
+            " {expected_green_color}, but got: {field_color}"
         )
