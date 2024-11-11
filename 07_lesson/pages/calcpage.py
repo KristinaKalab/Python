@@ -6,7 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 class SlowCalculatorPage:
     def __init__(self, driver):
         self.driver = driver
-        self.waiter = WebDriverWait(driver, 40)
+        self.waiter = WebDriverWait(driver, 45)
 
     def set_delay(self, delay):
         delay_field = self.waiter.until(EC.presence_of_element_located
@@ -22,5 +22,4 @@ class SlowCalculatorPage:
 
     def get_result(self):
         result_locator = (By.CSS_SELECTOR, "#result")
-        return self.waiter.until(EC.presence_of_element_located(result_locator)
-                                 ).text
+        return self.waiter.until(EC.presence_of_element_located(result_locator)).text

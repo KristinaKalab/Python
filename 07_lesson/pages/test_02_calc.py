@@ -5,10 +5,11 @@ from calcpage import SlowCalculatorPage
 
 @pytest.fixture
 def driver():
+    # Инициализация веб-драйвера
     driver = webdriver.Chrome()
-    driver.maximize_window()
+    driver.maximize_window()  # Максимизация окна браузера для лучшей видимости
     yield driver
-    driver.quit()
+    driver.quit()  # Закрытие браузера после завершения тестов
 
 
 def test_slow_calculator(driver):
@@ -24,14 +25,9 @@ def test_slow_calculator(driver):
     for button in buttons:
         calculator_page.click_button(button)
 
-    # Ожидать появления результата
-    try:
-        # Ожидать результата 15
-        result_text = calculator_page.get_result()
-        print(f"Текущий текст результата: {result_text}")
+    # Ожидание появления результата
+    result_text = calculator_page.get_result()
+    print(f"Текущий текст результата: {result_text}")
 
-        # Проверка, что результат действительно равен 15
-        assert result_text == "15", "Ожидался результат 15, но получен: "
-        "{result_text}"
-    except Exception as e:
-        print(f"Ошибка: {e}")
+    # Проверка, что результат действительно равен 15
+    assert result_text == "15", f"e;Ожидался результат 15, но получен: {result_text}"
