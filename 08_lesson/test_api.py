@@ -6,8 +6,9 @@ class ProjectPage:
     BASE_URL = "https://ru.yougile.com/api-v2/projects"
     HEADERS = {
         "Content-Type": "application/json",
-        "Authorization": "Bearer TOKEN"
+        "Authorization": "Bearer VF1WpVsm33pWE6jv6BOyynuUEDEtygA9e-jfSaPAkzjgRemZH44O8BQWttUQ2NNO"
     }
+
 
     def create_project(self, title="Тестовое питон", users=None):
         if users is None:
