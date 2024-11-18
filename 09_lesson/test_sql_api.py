@@ -1,6 +1,7 @@
 import pytest
-from sqlalchemy import create_engine, text
+from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from db_operations import add_subject, update_subject, delete_subject, get_subject
 
 # Строка подключения
 DATABASE_URL = 'postgresql://postgres:Rjnbr-;bdjnbr1@localhost:5433/QA'
@@ -18,17 +19,11 @@ def test_add_subject():
     subject_title = 'Algebra'
 
     # Добавление нового предмета
-    result = session.execute(
-        text("INSERT INTO subject (subject_id, subject_title) VALUES (:id, :title) RETURNING subject_id, subject_title"),
-        {"id": subject_id, "title": subject_title}
-    )
-    session.commit()
-
-    inserted_subject_id, inserted_subject_title = result.fetchone()
+    inserted_subject = add_subject(session, subject_id, subject_title)
 
     # Проверка, что предмет добавлен с правильными значениями
-    assert inserted_subject_id == subject_id
-    assert inserted_subject_title == subject_title
+    assert inserted_subject[0] == subject_id
+    assert inserted_subject[1] == subject_title
 
     session.close()  # Закрытие сессии
 
@@ -36,17 +31,22 @@ def test_add_subject():
 def test_update_subject():
     session = Session()
 
+    old_title = "Algebra"
+    new_title = "Advanced Mathematics"
+
+    # Проверка, что предмет с названием old_title существует перед обновлением
+    existing_subject = get_subject(session, old_title)
+
+    if existing_subject is None:
+        # Если записи нет, добавляем ее для теста
+        add_subject(session, 20, old_title)
+
     # Обновление названия предмета
-    session.execute(text("UPDATE subject SET subject_title = :new_title WHERE subject_title = :old_title"),
-                    {"new_title": "Advanced Mathematics", "old_title": "Algebra"})
-    session.commit()
+    update_subject(session, old_title, new_title)
 
     # Проверка, что предмет изменён
-    result = session.execute(text("SELECT subject_title FROM subject WHERE subject_title = :title"),
-                             {"title": "Advanced Mathematics"})
-    updated_subject_title = result.fetchone()
-
-    assert updated_subject_title is not None and updated_subject_title[0] == "Advanced Mathematics"
+    updated_subject = get_subject(session, new_title)
+    assert updated_subject is not None and updated_subject[0] == new_title
 
     session.close()
 
@@ -54,16 +54,20 @@ def test_update_subject():
 def test_delete_subject():
     session = Session()
 
+    title_to_delete = "Advanced Mathematics"
+
+    # Проверка, что предмет с названием title_to_delete существует перед удалением
+    existing_subject = get_subject(session, title_to_delete)
+
+    if existing_subject is None:
+        # Если записи нет, добавляем ее для теста
+        add_subject(session, 20, title_to_delete)
+
     # Удаление предмета
-    session.execute(text("DELETE FROM subject WHERE subject_title = :title"),
-                                            {"title": "Advanced Mathematics"})
-    session.commit()
+    delete_subject(session, title_to_delete)
 
     # Проверка, что предмет удалён
-    result = session.execute(text("SELECT * FROM subject WHERE subject_title = :title"),
-                             {"title": "Advanced Mathematics"})
-    deleted_subject = result.fetchone()
-
+    deleted_subject = get_subject(session, title_to_delete)
     assert deleted_subject is None
 
     session.close()
