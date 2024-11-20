@@ -1,33 +1,31 @@
 import pytest
 from selenium import webdriver
-from calcpage import SlowCalculatorPage
-
+from calcpage import SlowCalculatorPage  # Import the class
 
 @pytest.fixture
 def driver():
-    # Инициализация веб-драйвера
+    # Initialize the WebDriver (e.g., Chrome)
     driver = webdriver.Chrome()
-    driver.maximize_window()  # Максимизация окна браузера для лучшей видимости
+    driver.get('https://bonigarcia.dev/selenium-webdriver-java/slow-calculator.html')
     yield driver
-    driver.quit()  # Закрытие браузера после завершения тестов
+    driver.quit()
 
 
-def test_slow_calculator(driver):
-    # Открыть страницу калькулятора
-    driver.get("https://bonigarcia.dev/selenium-webdriver-java/slow-calculator.html")
-    calculator_page = SlowCalculatorPage(driver)
+def test_addition(driver):
+    calculator = SlowCalculatorPage(driver)
 
-    # Установить задержку 45
-    calculator_page.set_delay("45")
+    # Set the delay to 45 seconds
+    calculator.set_delay(45)
 
-    # Нажать на кнопки 7, +, 8, =
-    buttons = ['7', '+', '8', '=']
-    for button in buttons:
-        calculator_page.click_button(button)
+    # Perform the addition 7 + 8
+    calculator.click_button('7')
+    calculator.click_button('+')
+    calculator.click_button('8')
+    calculator.click_button('=')
 
-    # Ожидание появления результата
-    result_text = calculator_page.get_result()
-    print(f"Текущий текст результата: {result_text}")
+    # Wait for the result to be displayed
+    calculator.wait_for_result(15)
 
-    # Проверка, что результат действительно равен 15
-    assert result_text == "15", f"e;Ожидался результат 15, но получен: {result_text}"
+    # Get the result and assert it
+    result = calculator.get_result()
+    assert result == '15', f"Expected result to be '15', but got '{result}'"
