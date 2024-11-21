@@ -1,4 +1,0 @@
-"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"Проверка функции сложения в медленном калькуляторе","46440","Тест на сложение","lesson_10","Wed Nov 20 18:51:48 IST 2024","passed","Wed Nov 20 18:52:34 IST 2024","","test_02_calc","",""
-"Проверка функциональности заполнения формы на веб-странице","2552","Тест заполнения формы","lesson_10","Wed Nov 20 18:51:37 IST 2024","passed","Wed Nov 20 18:51:40 IST 2024","","test_01_form","",""
-"Проверка функциональности корзины покупок на сайте.","3639","Тест корзины покупок","lesson_10","Wed Nov 20 18:52:43 IST 2024","passed","Wed Nov 20 18:52:46 IST 2024","","test_03_shop","",""
